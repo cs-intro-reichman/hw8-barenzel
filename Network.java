@@ -29,8 +29,9 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
-        for (int i = 0; i < this.userCount; i++) {
-            if (name.toLowerCase().equals(this.users[i].getName().toLowerCase())) {
+        String name1= name.toLowerCase();
+        for (int i = 0; i < userCount; i++) {
+            if (name1.equals(this.users[i].getName().toLowerCase())){
                 return users[i];
             }
         }
@@ -115,14 +116,14 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String ans = "Network: \n";
+        String str= "Network:\n";
         if (userCount == 0){
-            return "Network:";
+         return "Network:";
         }
         for (int i = 0; i < userCount - 1; i++) {
-            ans += users[i].toString() + "\n";
+            str += users[i].toString() + "\n";
         }
-        ans += users[userCount - 1];
-        return ans;
-    }
+        str += users[userCount-  1];
+        return str;
+     }
 }
