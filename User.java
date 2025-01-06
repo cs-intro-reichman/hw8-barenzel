@@ -57,7 +57,7 @@
             return false;
         }
         for (int i = 0; i < fCount; i++) {
-            if (this.follows[i] != null && this.follows[i].toLowerCase().equals(name.toLowerCase())) {
+            if (this.follows[i] != null && this.follows[i].equals(name)) {
                 return false;
             }
         }
