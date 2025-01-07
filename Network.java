@@ -72,20 +72,22 @@ public class Network {
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
+        User user = getUser(name);
         User mostRecommendedUserToFollow = null;
         int maxMutualFollowees = -1;
-        User currentUser = getUser(name);
-        if (currentUser == null) {
-            return null;
-        }
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] != null && !users[i].getName().equals(name)) {
-            int mutualFolloweesCount = currentUser.countMutual(users[i]);
-                if (mutualFolloweesCount > maxMutualFollowees) {
-                    mostRecommendedUserToFollow = users[i];
-                    maxMutualFollowees = mutualFolloweesCount;
-                }
-            }    
+        for (int i = 0; i < userCount; i++) {
+            User currentUser = users[i];
+            if (user == currentUser) {
+                continue;
+            }
+            if (user.follows(currentUser.getName())){ 
+                continue;
+            }
+            int mutualFolloweesCount = user.countMutual(currentUser);
+            if (mutualFolloweesCount > maxMutualFollowees) {
+                mostRecommendedUserToFollow = users[i];
+                maxMutualFollowees = mutualFolloweesCount;
+            } 
         }
         return mostRecommendedUserToFollow.getName();
     }
@@ -119,14 +121,16 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String str= "Network:\n";
-        if (userCount == 0){
-         return "Network:";
+        String str = "Network:\n";
+        if (userCount == 0) {
+            return "Network:";
         }
-        for (int i = 0; i < userCount - 1; i++) {
-            str += users[i].toString() + "\n";
+        for (int i = 0; i < userCount; i++) {
+            str += users[i].toString();
+            if (i < userCount - 1) {
+                str += "\n";
+            }
         }
-        str += users[userCount-  1];
         return str;
-     }
+        }
 }
